@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+
+.btn {
+	@apply border border-brand rounded-md text-sm font-bold py-2 w-full;
+}
+
+@tailwind utilities;
