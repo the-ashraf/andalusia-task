@@ -8,6 +8,7 @@ const baseUrl = 'https://pocms-stage.ahbsdev.com/api/offers';
 
 const offers = ref([]);
 const categories = ref('');
+const page = ref(1);
 const limit = ref(10);
 const sort_key = ref('order');
 const sort_type = ref('desc');
@@ -26,9 +27,29 @@ watch(sort_key, () => {
 	loadOffers();
 })
 
+watch(sort_type, () => {
+	loadOffers();
+})
+
 watch(search, () => {
 	loadOffers();
 })
+
+watch(page, () => {
+	loadOffers();
+})
+
+function loadMoreOffers () {
+	page.value = offers.value.meta.current_page + 1
+}
+
+function onSortChange (e) {
+	console.log(e.target.value);
+	let sortPair = e.target.value.split('_');
+	sort_key.value = sortPair[0];
+	sort_type.value = sortPair[1];
+	sortPair = null;
+}
 
 const loadOffers = () => {
 	loading.value = true;
@@ -41,6 +62,7 @@ const loadOffers = () => {
 		sort_key: sort_key.value,
 		sort_type: sort_type.value,
 		search: search.value,
+		page: page.value,
 	}
 
 	const searchParams = new URLSearchParams(params);
@@ -87,19 +109,6 @@ onMounted(() => {
 				</div>
 
 				<div class="w-4/5 space-y-8">
-					<div class="flex justify-between items-center">
-						<h2 class="pb-2 border-b-4 border-brand font-bold text-lg">جميع العروض المتاحة</h2>
-
-						<select class="w-32 text-brand rounded-sm border border-gray-300" name="sort" id="sort" v-model="sort_key">
-							<option value="price">السعر</option>
-							<option value="bookings">عدد الحجوازت</option>
-							<option value="order">الترتيب</option>
-						</select>
-					</div>
-
-
-
-
 					<div class="">
 						<div class="w-full h-full flex justify-center items-center" v-if="loading">
 							<div
@@ -107,6 +116,22 @@ onMounted(() => {
 						</div>
 
 						<div class="grid grid-cols-2 gap-8" v-else>
+							<div class="col-span-2">
+								<div class="flex justify-between items-center">
+									<h2 class="pb-2 border-b-4 border-brand font-bold text-lg">جميع العروض المتاحة</h2>
+
+									<select class="block h-8 w-40 px-2 text-sm outline-none text-gray-500 border border-gray-300 group-hover:border-brand/20 rounded-md" name="sort" id="sort" @change.prevent="onSortChange">
+										<option value="order_desc">الترتيب</option>
+										<option value="price_desc">الاعلي سعراً</option>
+										<option value="price_asc">الاقل سعراً</option>
+										<option value="bookings_desc">الاكثر حجزاً</option>
+										<option value="bookings_asc">الاقل حجزاً</option>
+									</select>
+								</div>
+							</div>
+
+
+
 							<div class="border rounded-lg overflow-hidden relative" v-for="offer in offers.data" :key="offer.id">
 								<div class="w-auto">
 									<img class="w-full h-auto object-cover object-top" :src="offer.image"
@@ -153,12 +178,26 @@ onMounted(() => {
 									</div>
 								</div>
 							</div>
+							
+							<div class="col-span-2 flex justify-center w-full" v-if="offers.links?.next">
+								<button class="btn text-brand w-auto px-3" @click.prevent="loadMoreOffers">
+									تحميل المزيد من العروض
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</main>
 
-		<footer></footer>
+		<footer class="mt-8 bg-[#F3FAFD]">
+			<div class="py-4 px-4">
+				<img class="h-16 w-auto block" src="./assets/logo.svg" alt="">
+			</div>
+			<hr class="border-t-2 border-gray-200 mt-2 mx-8">
+			<p class="text-center text-brand-light font-bold text-xs py-2">
+				جميع الحقوق محقوظة لمجموعة اندلسية للخدمات الطبية 2022 &copy;
+			</p>
+		</footer>
 	</div>
 </template>
