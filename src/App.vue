@@ -1,7 +1,8 @@
 <script setup>
-import Categories from "./components/Categories.vue"
-import {onMounted, ref, watch} from "vue";
 import axios from "axios";
+import {onMounted, ref, watch} from "vue";
+import Categories from "./components/Categories.vue"
+import SearchBox from "./components/SearchBox.vue"
 
 const baseUrl = 'https://pocms-stage.ahbsdev.com/api/offers';
 
@@ -22,6 +23,10 @@ watch(categories, () => {
 })
 
 watch(sort_key, () => {
+	loadOffers();
+})
+
+watch(search, () => {
 	loadOffers();
 })
 
@@ -76,9 +81,7 @@ onMounted(() => {
 
 			<div class="flex gap-8 px-4 mt-8">
 				<div class="w-1/5 space-y-8">
-					<div class="relative">
-						<input class="shadow border border-gray-300 placeholder-gray-300 py-1 rounded-sm w-full" type="text" value="اكتب اسم العرض هنا">
-					</div>
+					<SearchBox v-model="search" />
 
 					<Categories class="w-full" @updated="onCategoryUpdate"/>
 				</div>

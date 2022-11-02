@@ -2,6 +2,7 @@
 import axios from "axios";
 import {onMounted, ref, watch} from "vue";
 const emit = defineEmits(["updated"]);
+import { FunnelIcon } from "@heroicons/vue/24/solid";
 
 let baseUrl = 'https://pocms-stage.ahbsdev.com/api/categories';
 let axiosConfig = {headers: {'BU-ID': import.meta.env.VITE_API_KEY, 'lang': 'en'}};
@@ -38,8 +39,9 @@ watch(selectedCategories, (val) => {
 	</div>
 
 	<div class="" v-else>
-		<div class="bg-gradient-to-l from-brand-dark to-brand-light text-white py-2 px-3 font-bold rounded-t-lg">
-			فئات العروض المتاحة
+		<div class="bg-gradient-to-l from-brand-dark to-brand-light text-white py-2 px-3 font-bold rounded-t-lg flex items-center gap-2">
+			<FunnelIcon class="h-5 w-5 text-white" />
+			<span>فئات العروض المتاحة</span>
 		</div>
 		<ul class="rounded-b-lg border border-[#8ECAFF] p-8 divide-y divide-gray-200">
 			<li class="flex items-center justify-between" v-for="category in categories" :key="category.id">

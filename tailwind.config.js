@@ -6,6 +6,9 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			fontFamily: {
+				display: ['Cairo', 'sans-serif']
+			},
 			colors: {
 				brand: {
 					dark: '#045DAD',
