@@ -1,29 +1,21 @@
-# task
+# Andalusia's Task
 
-This template should help get you started developing with Vue 3 in Vite.
+built with Vue 3 and tailwind
 
-## Recommended IDE Setup
+## To Install
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Clone the repo
 
-## Customize configuration
+``$ git clone git@github.com:the-ashraf/andalusia-task.git``
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Open the project directory
 
-## Project Setup
+``cd andalusia-task``
 
-```sh
-npm install
-```
+Install dependencies using NPM
 
-### Compile and Hot-Reload for Development
+``$ npm install``
 
-```sh
-npm run dev
-```
+Run Vite to compile the source code
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+``$ npm run dev ``
